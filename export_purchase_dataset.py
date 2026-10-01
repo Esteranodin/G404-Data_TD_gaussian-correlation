@@ -14,7 +14,6 @@ from distributions.purchase_dataset import (
     make_groups,
 )
 
-
 PROJECT_DIR = Path(__file__).resolve().parent
 DATA_DIR = PROJECT_DIR / "data"
 DEFAULT_OUTPUT = DATA_DIR / "purchase_transactions.csv"

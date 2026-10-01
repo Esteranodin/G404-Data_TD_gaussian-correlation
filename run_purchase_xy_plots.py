@@ -1,8 +1,7 @@
 """Construire le dataset canonique et exporter six vues XY."""
-
 from analysis.purchase_plots import (
-    build_purchase_xy_linear_fit_figures,
     build_purchase_xy_figures,
+    build_purchase_xy_linear_fit_figures,
     save_purchase_xy_figures,
 )
 from export_purchase_dataset import build_dataset, validate_dataset

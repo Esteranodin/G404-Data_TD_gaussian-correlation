@@ -4,7 +4,9 @@ L'objectif principal est de comprendre et d'interpréter les outils statistiques
 
 ## Parcours conseillé
 
-1. Utilisez [purchase_transactions.csv](data/purchase_transactions.csv) pour créer les trois nuages de points demandés.
+1. Utilisez [purchase_transactions.csv](data/purchase_transactions.csv) pour créer les trois nuages de points demandés. 
+> *Cf.* [ici](#exporter-le-dataset), pour créer les data et [ici](#exécuter-le-projet) pour éxecuter tout le projet
+
 2. Après votre première version, comparez votre code avec le [notebook 00_reference](notebooks/00_reference_nuages_xy_FR.ipynb).
 3. Utilisez ensuite le [notebook 01_age_montant_association](notebooks/01_age_montant_association_FR.ipynb).
 4. Terminez avec le [notebook convergence_moyenne_ecart_type](notebooks/02_convergence_moyenne_ecart_type_FR.ipynb).
@@ -13,15 +15,11 @@ Le dossier `output/` contient déjà les graphiques en PNG et HTML. Relancer le 
 
 ## Présentation du projet
 
-Cette version complète est remise après la présentation des réalisations.
-
-Elle reprend la structure du projet Rectangle du 22 septembre : un lanceur, un paquet local et des tests qui importent la même classe.
+Un lanceur, un paquet local et des tests qui importent la même classe.
 
 Le paquet `analysis` ajoute ensuite `descriptive.py` et `inference.py` pour décrire A et B et comparer leurs moyennes.
 
-## Extension du 1er octobre : cinq colonnes, cinq fonctions
-
-Le projet et la classe `GaussianMixture` du 29 septembre restent disponibles et inchangés.
+## Cinq colonnes, cinq fonctions
 
 La nouvelle simulation conserve une structure fonctionnelle en cinq étapes :
 
@@ -66,7 +64,7 @@ Avec les paramètres du cours :
 
 L'âge explique ainsi une partie de l'écart de montant A/B, tandis qu'un petit effet de groupe reste présent à âge égal.
 
-Le lanceur compare_age_association.py affiche les moyennes, la décomposition connue par construction et les corrélations dans A+B, A et B pour les trois variables quantitatives.
+Le lanceur `compare_age_association.py` affiche les moyennes, la décomposition connue par construction et les corrélations dans A+B, A et B pour les trois variables quantitatives.
 
 ### Exporter le dataset
 
@@ -191,31 +189,6 @@ gaussian_project_solution/
 └── README.md
 ```
 
-### Correspondance avec le projet Rectangle
-
-| Projet Rectangle | Projet gaussien | Rôle |
-| --- | --- | --- |
-| `run_rectangle.py` | run_gaussian.py | Choisir les paramètres, créer le modèle, exporter les six figures et afficher le tableau de bord |
-| `geometry/__init__.py` | distributions/__init__.py | Définir une constante partagée : ici `DEFAULT_SEED` |
-| `geometry/rectangle.py` | distributions/gaussian_mixture.py | Définir la classe, tirer les valeurs et assembler le dataframe |
-| — | distributions/gaussian_plots.py | Construire les figures à partir d'un objet déjà échantillonné |
-| — | analysis/sampling_variation.py | Répéter les tirages sous H₀ et conserver `avg(B) − avg(A)` |
-| — | analysis/inference_plots.py | Construire l'histogramme Plotly des différences simulées |
-| — | run_sampling_variation.py | Reproduire la figure d'échantillonnage sous H₀ conservée du 29 septembre |
-| `tests/test_rectangle.py` | tests/test_gaussian_mixture.py | Vérifier la classe utilisée par le lanceur |
-| — | analysis/descriptive.py | Décrire A et B et mesurer leur écart observé |
-| — | analysis/inference.py | Estimer et tester la différence de moyennes |
-| — | compare_processes.py | Lancer la comparaison descriptive et formelle |
-| — | tests/test_analysis.py | Vérifier les nouveaux calculs |
-| — | distributions/age.py | Ajouter `age` à une copie des groupes A/B |
-| — | distributions/purchase_dataset.py | Créer les groupes puis ajouter `purchase_amount` |
-| — | analysis/association.py | Mesurer et décomposer l'association âge–montant |
-| — | analysis/convergence.py | Calculer les trajectoires emboîtées et construire les cinq figures de convergence |
-| — | analysis/purchase_plots.py | Construire les trois nuages XY bruts et leurs vues avec droites, avec une échelle Y commune |
-| — | export_purchase_dataset.py | Construire, contrôler et exporter les cinq colonnes en CSV |
-| — | run_purchase_xy_plots.py | Exécuter le pipeline canonique et exporter six vues en PNG/HTML |
-| — | run_convergence.py | Exporter les cinq vues de convergence en PNG/HTML |
-
 ## Imports et séparation des responsabilités
 
 Le lanceur et les tests utilisent le même import :
@@ -255,6 +228,7 @@ python run_purchase_xy_plots.py
 python run_convergence.py
 
 python -m unittest discover -s tests -v
+# lance les trente-trois tests.
 ```
 
 Lancez les tests depuis la racine du projet.
@@ -317,61 +291,6 @@ Le script écrit cinq couples PNG/HTML :
 - `sample_mean_convergence_multiple_seeds.png` et `.html` (seeds 406 à 410)
 - `sample_mean_difference_convergence_multiple_seeds.png` et `.html` (`avg(B) - avg(A)`, seeds 1404 à 1411)
 
-## Exécuter avec Quick Run dans l'espace de travail g404
-
-Dans la version du cours située sous :
-
-```text
-courses/2026-10-01/lab/gaussian_project_solution/
-```
-
-ouvrez l'un des fichiers exécutables, puis choisissez `Python: Run selected file` dans Quick Run.
-
-Les principaux points d'entrée sont :
-
-- `run_gaussian.py` : décrit l'échantillon, écrit les six PNG et les six HTML dans `output/`, puis affiche le tableau de bord en une seule fenêtre ;
-- `run_sampling_variation.py` : répète les tirages sous H₀, affiche la figure Plotly conservée du 29 septembre et écrit le PNG et le HTML dans `output/` ;
-- `compare_processes.py` : affiche la comparaison statistique ;
-- `compare_age_association.py` : construit les cinq colonnes par appels successifs et compare les corrélations globales et par groupe ;
-- `export_purchase_dataset.py` : reconstruit le dataset et écrit le CSV dans `data/` ;
-- `run_purchase_xy_plots.py` : reconstruit le même dataset et écrit les six paires PNG/HTML dans `output/` ;
-- `run_convergence.py` : calcule cinq vues avec 20 tailles de `n` et les écrit en PNG/HTML dans `output/` ;
-- `distributions/gaussian_mixture.py` : vérifie le tirage reproductible, les effectifs et les métadonnées conservées ;
-- `distributions/gaussian_plots.py` : construit les six figures, vérifie leur structure, écrit les douze fichiers et affiche uniquement le tableau de bord ;
-- `tests/test_gaussian_mixture.py` : lance les dix tests du projet initial et de ses vues graphiques ;
-- `tests/test_analysis.py` : lance les huit tests de l'extension statistique ;
-- `tests/test_age_association.py` : lance les douze tests de l'extension ;
-- `tests/test_convergence.py` : lance les trois tests des calculs et exports de convergence.
-
-Quick Run reconnaît les deux fichiers du paquet comme des modules et utilise :
-
-```bash
-python -m distributions.gaussian_mixture
-python -m distributions.gaussian_plots
-```
-
-Les autres fichiers de `distributions/` et `analysis/` restent des modules importés. Ils sont à vérifier avec le fichier de tests correspondant plutôt qu'en les lançant seuls.
-
-Cette option dépend de la tâche configurée dans l'espace de travail g404 : elle ajoute la racine du projet au chemin des imports.
-
-Pour un fichier placé dans `tests/`, le lanceur ajoute aussi automatiquement le dossier parent de `tests/`. Les imports locaux restent donc disponibles même si le terminal n'a pas encore rechargé son `PYTHONPATH`.
-
-Lorsqu'un bloc suivant est présent, Quick Run lance le contrôle prévu :
-
-```python
-if __name__ == "__main__":
-    ...
-```
-
-Pour une copie extraite ailleurs, utilisez les commandes du terminal présentées plus haut.
-
-La vérification complète reste :
-
-```bash
-python -m unittest discover -s tests -v
-```
-
-Elle lance les trente-trois tests.
 
 ## Suivre les données
 

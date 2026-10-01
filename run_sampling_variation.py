@@ -8,7 +8,6 @@ from analysis.inference_plots import plot_sampling_variation
 from distributions import DEFAULT_SEED
 from distributions.gaussian_mixture import GaussianMixture
 
-
 PROJECT_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = PROJECT_DIR / "output"
 DEFAULT_PNG_OUTPUT = OUTPUT_DIR / "sampling_variation.png"

@@ -1,4 +1,14 @@
+# Environnements virtuels
+.venv/
+venv/
+
+# Cache Python
+__pycache__/
+*.py[cod]
+
+# Cache des tests
+.pytest_cache/
+
+# Datas et outputs
 /data/
 /output/
-
-.venv/

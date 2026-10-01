@@ -6,7 +6,6 @@ import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 
-
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 OUTPUT_DIR = PROJECT_DIR / "output"
 COLORS = {"A": "#002D62", "B": "#D94801"}
